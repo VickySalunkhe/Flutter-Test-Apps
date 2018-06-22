@@ -5,11 +5,23 @@ import 'main.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 List<String> _getdiamonQuality = [
-  "VVS1", "VVS2", "VS1", "VS2", "S1", "S2", "I1", "I2", "I3", "Single Cut",
+  "VVS1",
+  "VVS2",
+  "VS1",
+  "VS2",
+  "S1",
+  "S2",
+  "I1",
+  "I2",
+  "I3",
+  "Single Cut",
 ];
 
 List<String> _getkarat = [
-  "9 KT","10 KT","14 KT","18 KT",
+  "9 KT",
+  "10 KT",
+  "14 KT",
+  "18 KT",
 ];
 final List<String> productImage = [
   "https://personalproject1.000webhostapp.com/images/product/SR-R-126115..jpg",
@@ -21,19 +33,19 @@ final List<String> productImage = [
 class _ReviewPage {
   const _ReviewPage({this.text, this.star, this.name});
   final String text, name;
-  final double star;
+  final int star;
 }
 
 const List<_ReviewPage> _reviews = const <_ReviewPage>[
   const _ReviewPage(
       text:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt  ',
-      star: 4.5,
+      star: 4,
       name: 'Vicky'),
   const _ReviewPage(
       text:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt  ',
-      star: 5.0,
+      star: 5,
       name: 'Vipul'),
 ];
 
@@ -81,7 +93,8 @@ class ProductDetailsState extends State<ProductDetails>
     _controller = new TabController(
         vsync: this, length: _customizePages.length, initialIndex: 0);
   }
-List<String> _getColour = ["White Gold","Gold","Rose Gold","Yellow Gold"];
+
+  List<String> _getColour = ["White Gold", "Gold", "Rose Gold", "Yellow Gold"];
 
   _menuLayout() {
     return new Container(
@@ -265,49 +278,52 @@ List<String> _getColour = ["White Gold","Gold","Rose Gold","Yellow Gold"];
       itemCount: _itemCount,
     );
   }
- 
+
   Widget _karat(int _itemCount) {
     return new Container(
-      alignment: Alignment.center,
-      margin: const EdgeInsets.only(top:22.0,left:10.0),
-    child: new GridView.builder(
-      controller: ScrollController(),
-      gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 5,
-     //   childAspectRatio: 1.0,
-      ),
-      itemBuilder: (BuildContext context, int index) {
-        return new GestureDetector(
-          onTap: (){print("Karat Tap $index -> "+_getkarat[index]);
-          },
-          child: new Container(
-            alignment: Alignment.center, 
-            margin: const EdgeInsets.all(5.0),
-            decoration: new BoxDecoration(
-               border: new Border.all(color: Colors.black26)
-            ),
-              child: new Text(_getkarat[index], style: TextStyle(fontSize: 16.0),),
+        alignment: Alignment.center,
+        margin: const EdgeInsets.only(top: 22.0, left: 10.0),
+        child: new GridView.builder(
+          controller: ScrollController(),
+          gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 5,
+            //   childAspectRatio: 1.0,
           ),
-        );
-      },
-      itemCount: _itemCount,
-    ));
+          itemBuilder: (BuildContext context, int index) {
+            return new GestureDetector(
+              onTap: () {
+                print("Karat Tap $index -> " + _getkarat[index]);
+              },
+              child: new Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.all(5.0),
+                decoration: new BoxDecoration(
+                    border: new Border.all(color: Colors.black26)),
+                child: new Text(
+                  _getkarat[index],
+                  style: TextStyle(fontSize: 16.0),
+                ),
+              ),
+            );
+          },
+          itemCount: _itemCount,
+        ));
   }
 
   Widget _diamond(int _itemCount) {
     return new GridView.builder(
       controller: ScrollController(),
       gridDelegate: new SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: MediaQuery.of(context).size.width/5,
+        maxCrossAxisExtent: MediaQuery.of(context).size.width / 5,
         childAspectRatio: 1.27,
       ),
       itemBuilder: (BuildContext context, int index) {
         return new Container(
-          margin: EdgeInsets.only(top:10.0),
+            margin: EdgeInsets.only(top: 10.0),
             //padding: const EdgeInsets.only(top:5.0,left:10.0,right:10.0,bottom: 4.0),
             child: new GestureDetector(
                 onTap: () {
-                  print("Diamond Tap, $index  -> "+ _getdiamonQuality[index]);
+                  print("Diamond Tap, $index  -> " + _getdiamonQuality[index]);
                 },
                 child: new Column(children: [
                   new Icon(Icons.ac_unit),
@@ -342,10 +358,22 @@ List<String> _getColour = ["White Gold","Gold","Rose Gold","Yellow Gold"];
   int radioValue = 0;
   void handleRadioValueChanged(int value) {
     setState(() {
-      radioValue = value; 
+      radioValue = value;
     });
   }
-  
+
+  List<Widget> _getStar(int star) {
+    List<Widget> rating = [];
+    for (int i = 1; i <= 5; i++) {
+      if (i <= star) {
+        rating.add(new Icon(Icons.star));
+      } else {
+        rating.add(new Icon(Icons.star_border));
+      }
+    }
+    return rating;
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -427,8 +455,8 @@ List<String> _getColour = ["White Gold","Gold","Rose Gold","Yellow Gold"];
           ),
           new SliverToBoxAdapter(
             child: new Column(
-             mainAxisSize: MainAxisSize.max,
-           children: <Widget>[ 
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
                 new Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: new Text(
@@ -451,35 +479,29 @@ List<String> _getColour = ["White Gold","Gold","Rose Gold","Yellow Gold"];
                       tabs: _customizePages.map((_CustomizePage _page) {
                         return new Tab(text: _page.text);
                       }).toList()),
-                ), 
-                new Container(  
-                  height: MediaQuery.of(context).size.width/3,
+                ),
+                new Container(
+                  height: MediaQuery.of(context).size.width / 3,
                   child: new TabBarView(
-                    controller: _controller,
-                    children: 
-                  _customizePages.map((_CustomizePage _page) {
+                      controller: _controller,
+                      children: _customizePages.map((_CustomizePage _page) {
                         //return new Tab(text: _page.text);
-                          switch (_page.pos.toInt()) {
-                            case 0:
-                              
-                              return _karat(_getkarat.length);
-                              break;
-                            case 1:
-                        
-                              return _diamond(_getdiamonQuality.length);
-                              break;
-                            case 2:
-                        
-                              return _colour(_getColour.length);
-                              break;
-                            case 3:
-                        
-                              return _standard(1); 
-                              break;
-                            default:
-                              new Text("data");
-                          }
-                      
+                        switch (_page.pos.toInt()) {
+                          case 0:
+                            return _karat(_getkarat.length);
+                            break;
+                          case 1:
+                            return _diamond(_getdiamonQuality.length);
+                            break;
+                          case 2:
+                            return _colour(_getColour.length);
+                            break;
+                          case 3:
+                            return _standard(1);
+                            break;
+                          default:
+                            new Text("data");
+                        }
                       }).toList()),
                 ),
                 new Padding(
@@ -493,158 +515,214 @@ List<String> _getColour = ["White Gold","Gold","Rose Gold","Yellow Gold"];
                   ),
                 ),
                 new Container(
-                 height: MediaQuery.of(context).size.width/2,
-                 child: new Container(
-                   margin: const EdgeInsets.only(top:5.0,left:65.0,right:65.0,bottom:5.0),
-                      child: new Column( 
-                        children: _productDetails.map((_ProductDetails _a){
-                        return new Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            new Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child:  new Text(_a.category,textAlign: TextAlign.left,
-                             style: TextStyle(fontSize: 18.0),),
-                            ),
-                            new Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: new Text(_a.value,textAlign: TextAlign.right,
-                             style: TextStyle(fontSize: 18.0),),
-                            ),
-                             
-                          ],
-                        ); 
-                        
-                      }).toList(),
-                      )
-                    ),
-                 
+                  height: MediaQuery.of(context).size.width / 2,
+                  child: new Container(
+                      margin: const EdgeInsets.only(
+                          top: 5.0, left: 65.0, right: 65.0, bottom: 5.0),
+                      child: new Column(
+                        children: _productDetails.map((_ProductDetails _a) {
+                          return new Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              new Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: new Text(
+                                  _a.category,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(fontSize: 18.0),
+                                ),
+                              ),
+                              new Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: new Text(
+                                  _a.value,
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(fontSize: 18.0),
+                                ),
+                              ),
+                            ],
+                          );
+                        }).toList(),
+                      )),
                 ),
                 new Container(
                   decoration: new BoxDecoration(
-                               border: new Border.all(color: Colors.black26)
-                            ),
+                      border: new Border.all(color: Colors.black26)),
                   padding: const EdgeInsets.all(10.0),
-                  margin: const EdgeInsets.only(top:10.0,left:10.0,right:10.0),
+                  margin:
+                      const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
                   child: new Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children : [
-                    new Column( 
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          new Padding(
-                            padding: const EdgeInsets.only(left:10.0,bottom:5.0),
-                            child : new Text("2 customer reviews",
-                              style: TextStyle(fontSize: 22.0,fontWeight: FontWeight.w500),
-                              textAlign: TextAlign.left,),
-                          ),
-                              new Padding(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        new Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            new Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, bottom: 5.0),
+                              child: new Text(
+                                "2 customer reviews",
+                                style: TextStyle(
+                                    fontSize: 22.0,
+                                    fontWeight: FontWeight.w500),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                            new Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: new Row(
-                                
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                new Row(children: <Widget>[
-                                new Icon(Icons.star),
-                                new Icon(Icons.star),
-                                new Icon(Icons.star), 
-                                new Icon(Icons.star),
-                                new Icon(Icons.star_half),
-                                ],),
-                                
-                                new Text("4.5 out of 5 Stars",style: TextStyle(fontSize: 18.0)),
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  new Row(
+                                    children: <Widget>[
+                                      new Icon(Icons.star),
+                                      new Icon(Icons.star),
+                                      new Icon(Icons.star),
+                                      new Icon(Icons.star),
+                                      new Icon(Icons.star_half),
+                                    ],
+                                  ),
+                                  new Text("4.5 out of 5 Stars",
+                                      style: TextStyle(fontSize: 18.0)),
                                 ],
-                            ),
-                              )
-                        
-                    ],
-                  ),
-                      new Icon(Icons.keyboard_arrow_right),                
-                  ]),
+                              ),
+                            )
+                          ],
+                        ),
+                        new Icon(Icons.keyboard_arrow_right),
+                      ]),
                 ),
                 new Container(
-                  margin: const EdgeInsets.only(top:15.0,left:15.0,right:25.0),
-                  child: new Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      new Text("Top Reviews",
-                        style: TextStyle(fontSize: 22.0,fontWeight: FontWeight.w500),
-                        textAlign: TextAlign.left),
-                      new Column(
-                        children: _reviews.map((_ReviewPage _review){
-                                return new Row(
-                                  
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [new Container(
-                                  //decoration: new BoxDecoration(border: new Border.all(color: Colors.black26)),
-                                  padding: const EdgeInsets.all(10.0),
-                                  margin: const EdgeInsets.only(top:5.0,left:10.0,right:10.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                    new Row(
-                                      children: <Widget>[
-                                        new Icon(Icons.person),
-                                        new Padding(
-                                        padding: const EdgeInsets.only(left:10.0),
-                                        child: new Text(_review.name,
-                                          style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.w400),
-                                          textAlign: TextAlign.left),
-                                        ),
-                                      ],
+                    margin: const EdgeInsets.only(
+                        top: 15.0, left: 15.0, right: 15.0),
+                    child: new Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        new Text("Top Reviews",
+                            style: TextStyle(
+                                fontSize: 22.0, fontWeight: FontWeight.w500),
+                            textAlign: TextAlign.left),
+                        new Column(
+                          children: _reviews.map((_ReviewPage _review) {
+                            return new Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  new Row(children: [
+                                    new Container(
+                                      //decoration: new BoxDecoration(border: new Border.all(color: Colors.black26)),
+                                      width: MediaQuery.of(context).size.width /
+                                          1.25,
+                                      //color: Colors.black12,
+                                      padding: const EdgeInsets.all(10.0),
+                                      margin: const EdgeInsets.only(
+                                          top: 5.0, left: 10.0, right: 10.0),
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            new Row(
+                                              children: <Widget>[
+                                                new Icon(Icons.person),
+                                                new Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10.0),
+                                                  child: new Text(_review.name,
+                                                      style: TextStyle(
+                                                          fontSize: 16.0,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                      textAlign:
+                                                          TextAlign.left),
+                                                ),
+                                              ],
+                                            ),
+                                            new Row(
+                                              children: _getStar(_review.star),
+                                            ),
+                                            new Text(_review.text,
+                                                style: TextStyle(
+                                                    fontSize: 16.0,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                                textAlign: TextAlign.left)
+                                          ]),
                                     ),
-                                    new Row(
-                                      children: <Widget>[
-                                        new Icon(Icons.star),
-                                        new Icon(Icons.star),
-                                        new Icon(Icons.star), 
-                                        new Icon(Icons.star),
-                                        new Icon(Icons.star_border),
-                                      ],
-                                    ),
-                                    new Expanded(
-                                      flex: 0 ,
-                                      child: new Text(_review.text,
-                                      style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.w400),
-                                      maxLines: null,),
-                                    ),
-                                    
-                                      
-                                      
-                                    
-                                    ])),
                                     new Icon(Icons.keyboard_arrow_right)
-                                    ]);
-                              }).toList(),
+                                  ])
+                                ]);
+                          }).toList(),
+                        ),
+                       
+                      ],
+                    )),
+                     new Padding(
+                            padding:
+                                const EdgeInsets.only(top: 10.0, bottom: 10.0,left:10.0,right:10.0),
+                            child: new OutlineButton(
+                              onPressed: () {
+                                print("all reviews");
+                              },
+                              borderSide:
+                                  BorderSide(color: Colors.black26, width: 2.0),
+                              child: new ListTile(
+                                title: new Text(
+                                  "Sell all reviews",
+                                  style: TextStyle(
+                                      fontSize: 20.0, 
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                trailing: new Icon(Icons.keyboard_arrow_right),
+                              ),
+                            )),
+                        new Padding(
+                            padding:
+                                const EdgeInsets.only(bottom: 10.0,left:10.0,right:10.0),
+                            child: new OutlineButton(
+                              onPressed: () {
+                                print("write a review");
+                              },
+                              borderSide:
+                                  BorderSide(color: Colors.black26, width: 2.0),
+                              child: new ListTile(
+                                title: new Text(
+                                  "Write a review",
+                                  style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                trailing: new Icon(Icons.keyboard_arrow_right),
+                              ),
+                            )),
+                            new Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: new Text(
+                                "Related Products",
+                                style: TextStyle(
+                                  fontSize: 22.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                             ),
-                            
-                          ],
-                        )
-                      
-                ),
-
-
               ],
             ),
           ),
-        
-
-
-          new SliverGrid(
-            gridDelegate: new SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: MediaQuery.of(context).size.width / 2,
-              //mainAxisSpacing: 10.0,
-              //crossAxisSpacing: 10.0,
-              childAspectRatio: 0.89,
-            ),
-            delegate: new SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
+          new SliverToBoxAdapter(
+            child: new Container(
+              height: MediaQuery.of(context).size.width/1.7,
+              child: ListView.builder(
+                itemCount: 10,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (BuildContext context,int index){
                 return new GestureDetector(
                     onTap: () {
                       print("Brand Tap, $index");
                     },
-                    child: new Card(
+                    child: new Container(
+                      height: 100.0,
+                      child: new Card( 
                         //padding: const EdgeInsets.all(5.0),
                         margin: const EdgeInsets.all(5.0),
                         //color: Colors.black38,
@@ -659,19 +737,59 @@ List<String> _getColour = ["White Gold","Gold","Rose Gold","Yellow Gold"];
                               //fit:BoxFit.contain
                             ),
                             new Text(
-                              "data",
+                              "ddasasata",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 16.0, color: Colors.black87),
                             ),
                           ],
-                        )));
+                        ))));
               },
-              childCount: 8,
-            ),
+            ))
           ),
+          
         ],
       ),
+      bottomNavigationBar: 
+          new Container(
+
+           height: kBottomNavigationBarHeight,
+           width: MediaQuery.of(context).size.width,
+            child: new Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                new GestureDetector(
+                  onTap: (){print("Add to Quote");},
+                  child: new Container(  
+                  color: Colors.black12,
+                  alignment: Alignment(0.0, 0.0),
+                  height: kBottomNavigationBarHeight,
+                  width: MediaQuery.of(context).size.width/2,
+                  child: new Text("Add to Quote",
+                  textAlign: TextAlign.center,
+                   style: TextStyle(fontSize: 20.0, color: Colors.black87,fontWeight: FontWeight.w500)),
+                ),
+                ),
+                new GestureDetector(
+                  onTap: (){print("Quote Now");},
+                  child: new Container(
+                  color: Colors.black,
+                  alignment: Alignment(0.0, 0.0),
+                  height: kBottomNavigationBarHeight,
+                  width: MediaQuery.of(context).size.width/2,
+                  child: new Text("Quote Now", style: TextStyle(
+                                  fontSize: 20.0, color: Colors.white,fontWeight: FontWeight.w500)),
+                )
+                )
+                
+                
+               
+              ],
+            ),
+          )
+          
+      
     );
   }
 }
