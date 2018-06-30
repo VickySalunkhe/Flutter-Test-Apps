@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:test3/product.dart';
 import 'brands.dart';
 import 'events.dart';
 import 'main.dart';
+
 class _Page {
   const _Page({this.text});
 
-  final String text; 
+  final String text;
 }
 
 const List<_Page> _allPages = const <_Page>[
@@ -19,15 +21,14 @@ const List<_Page> _allPages = const <_Page>[
   const _Page(text: 'Frama'),
   const _Page(text: 'Glambangs'),
   const _Page(text: 'Glide Star'),
-  
 ];
-  int _index;
+int _index;
 
 class BrandProducts extends StatefulWidget {
- // static const String routeName = '/material/scrollable-tabs';
- // BrandProducts(indexValue){}
-  
-  BrandProducts(int index0){
+  // static const String routeName = '/material/scrollable-tabs';
+  // BrandProducts(indexValue){}
+
+  BrandProducts(int index0) {
     _index = index0;
   }
   @override
@@ -38,16 +39,18 @@ class BrandProductsState extends State<BrandProducts>
     with SingleTickerProviderStateMixin {
   TabController _controller;
 
-  BrandProductsState(int index1){
+  BrandProductsState(int index1) {
     _index = index1;
   }
   //bool _customIndicator = false;
   @override
   void initState() {
     super.initState();
-    _controller = new TabController(vsync: this, length: _allPages.length, initialIndex: _index == null?0:_index);
+    _controller = new TabController(
+        vsync: this,
+        length: _allPages.length,
+        initialIndex: _index == null ? 0 : _index);
   }
-
 
   @override
   void dispose() {
@@ -162,13 +165,13 @@ class BrandProductsState extends State<BrandProducts>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         new GestureDetector(
-          onTap: (){
+          onTap: () {
             Navigator.push(
-                    context,
-                    new MaterialPageRoute(builder: (context) => new MainBody()),
-                  );
+              context,
+              new MaterialPageRoute(builder: (context) => new MainBody()),
+            );
           },
-        //child: new Expanded(
+          //child: new Expanded(
           child: new Row(
             children: [
               new Container(
@@ -200,10 +203,9 @@ class BrandProductsState extends State<BrandProducts>
               ),
             ],
           ),
-        //),
-      ),
+          //),
+        ),
       ],
-        
     );
   }
 
@@ -212,7 +214,7 @@ class BrandProductsState extends State<BrandProducts>
     //final Color iconColor = Theme.of(context).accentColor;
     return new Scaffold(
       appBar: new AppBar(
-       title: _appBarLayout(),
+        title: _appBarLayout(),
         actions: <Widget>[
           new IconButton(
             icon: new Icon(Icons.search),
@@ -232,7 +234,7 @@ class BrandProductsState extends State<BrandProducts>
           )
         ],
         bottom: new TabBar(
-          labelStyle: TextStyle(fontSize: 16.0), 
+          labelStyle: TextStyle(fontSize: 16.0),
           controller: _controller,
           isScrollable: true,
           tabs: _allPages.map((_Page page) {
@@ -244,7 +246,6 @@ class BrandProductsState extends State<BrandProducts>
         child: _menuLayout(),
       ),
       body: new TabBarView(
-        
           controller: _controller,
           children: _allPages.map((_Page page) {
             return new SafeArea(
@@ -263,7 +264,12 @@ class BrandProductsState extends State<BrandProducts>
                       (BuildContext context, int index) {
                         return new GestureDetector(
                             onTap: () {
-                              print("Brand Tap, $index");
+                              print(' Image Tapped!  -> $index');
+                              Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (context) => new ProductDetails()),
+                              );
                             },
                             child: new Card(
                                 //padding: const EdgeInsets.all(5.0),
@@ -303,4 +309,3 @@ class BrandProductsState extends State<BrandProducts>
     );
   }
 }
-

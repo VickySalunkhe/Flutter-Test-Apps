@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:test3/brand_product.dart';
+import 'package:test3/login_signup_page.dart';
+import 'package:test3/test.dart';
 import 'brands.dart';
 import 'events.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'second.dart';
-import 'test.dart';
+import 'product.dart';
+import'all_reviews.dart';
+import 'intro_screens.dart';
+
 
 void main() => runApp(new MyApp());
 
@@ -19,8 +24,8 @@ final List<String> imgList = [
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-        title: "appName",
+    return new MaterialApp( 
+        title: "appName", 
         theme: new ThemeData(
           primaryColor: Colors.black, 
           accentColor: Colors.cyan[600],
@@ -28,9 +33,12 @@ class MyApp extends StatelessWidget {
         routes: <String, WidgetBuilder>{
           '/Home': (BuildContext context) => new MainBody(),
           '/Second': (BuildContext context) => new ProductDetails(),
-          '/Test': (BuildContext context) => new ProductDetails(),
+          '/Review': (BuildContext context) => new TextFormFieldDemo(),
+          '/LoginSingup': (BuildContext context) => new LoginSignupPage(),
+          '/IntroScreens': (BuildContext context) => new IntroScreens(),
+
         },  
-        home: new ProductDetails());// ExpansionPanelsDemo()); //ProductDetails());
+        home: new LoginSignupPage());// ExpansionPanelsDemo()); //ProductDetails());
   } 
 }
 
@@ -40,12 +48,7 @@ class MainBody extends StatefulWidget {
 }
 
 class _MainBodyState extends State<MainBody> {
-  String _newText = "Add widgets here..........";
-  void _iconTapped(String value) {
-    setState(() {
-      _newText = value;
-    });
-  }
+ 
   _menuLayout() {
     return new Container(
         color: Colors.black,
@@ -137,7 +140,7 @@ class _MainBodyState extends State<MainBody> {
                     new Icon(Icons.keyboard_arrow_right, color: Colors.white),
                 onTap: () {
                   Navigator.pop(context);
-                  _iconTapped("Contact us");
+                //  _iconTapped("Contact us");
                 }),
             new Divider(
               color: Colors.grey,
@@ -211,7 +214,7 @@ class _MainBodyState extends State<MainBody> {
             color: Colors.white,
             tooltip: 'Search',
             onPressed: () {
-              _iconTapped("search");
+            //  _iconTapped("search");
             },
           ),
           new IconButton(
@@ -219,7 +222,7 @@ class _MainBodyState extends State<MainBody> {
             tooltip: 'Quotes',
             color: Colors.white,
             onPressed: () {
-              _iconTapped("Quotes");
+            //  _iconTapped("Quotes");
             },
           )
         ],
@@ -259,19 +262,14 @@ class _MainBodyState extends State<MainBody> {
             ),
           ),
           //Brands Text
-          new SliverFixedExtentList(
-            itemExtent: 44.0,
-            delegate: new SliverChildBuilderDelegate(
-              (BuildContext context,int index){    
-                return new Container(
+           new SliverToBoxAdapter(
+                child: new Container(
                   padding: const EdgeInsets.all(5.0),
                   alignment: Alignment.center,
                   child: new Text("Popular Brands",textAlign: TextAlign.center,
                   style: TextStyle( fontWeight: FontWeight.w500,fontSize: 18.0),),
-                );
-              },childCount :1,
-            ),
-          ),
+                )
+          ), 
           //Brands Display 2*2 grid
           new SliverGrid(
             gridDelegate: new SliverGridDelegateWithMaxCrossAxisExtent(
@@ -285,6 +283,11 @@ class _MainBodyState extends State<MainBody> {
                 return new GestureDetector(
                     onTap: () {
                       print("Brand Tap, $index");
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => new BrandProducts(index)),
+                        );
                     },
                     child: new Card(
                         //padding: const EdgeInsets.all(5.0),
@@ -293,7 +296,7 @@ class _MainBodyState extends State<MainBody> {
                         child: new Column(
                           children: <Widget>[
                             new Image.network(
-                              "https://personalproject1.000webhostapp.com/images/product/SR-R-126115..jpg",
+                              "https://personalproject1.000webhostapp.com/images/brand_img.png",
                               alignment: Alignment.center,
                               height:
                                   MediaQuery.of(context).size.width / 2 - 10,
@@ -313,40 +316,35 @@ class _MainBodyState extends State<MainBody> {
             ),
           ),
           //brands button
-          new SliverFixedExtentList(
-            itemExtent: 58.0,
-            delegate: new SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return new Padding(
+          new SliverToBoxAdapter(
+                child:  new Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: new OutlineButton(
                       highlightedBorderColor: Colors.black54,
+                      highlightColor: Colors.white30,
                       color: Colors.white,
                       onPressed: () {
                         print("Brand button tap");
+                        Navigator.push( 
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => new Brands()),
+                        );
                       },
                       child: new ListTile(
                         title: new Text("View All Brands"),
                         trailing: new Icon(Icons.keyboard_arrow_right),
                       ),
-                    ));
-              },
-              childCount: 1,
-            ),
+                    ))
           ),
           //events text
-           new SliverFixedExtentList(
-            itemExtent: 44.0,
-            delegate: new SliverChildBuilderDelegate(
-              (BuildContext context,int index){    
-                return new Container(
+           new SliverToBoxAdapter(
+                child: new Container(
                   padding: const EdgeInsets.all(5.0),
                   alignment: Alignment.center,
                   child: new Text("Upcoming Events",textAlign: TextAlign.center,
                   style: TextStyle( fontWeight: FontWeight.w500,fontSize: 18.0),),
-                );
-              },childCount :1,
-            ),
+                )
           ),
           //events list 2
           new SliverFixedExtentList(
@@ -362,7 +360,7 @@ class _MainBodyState extends State<MainBody> {
                       //height: size.width/2,
                       //width: size.width,
                       child: new Image.network(
-                          "https://personalproject1.000webhostapp.com/images/banner/image1s.jpg",
+                          "https://personalproject1.000webhostapp.com/images/event_img.png",
                           height:
                               ((MediaQuery.of(context).size.width - 10.0) / 2),
                           width: MediaQuery.of(context).size.width - 10.0,
@@ -373,26 +371,26 @@ class _MainBodyState extends State<MainBody> {
             ),
           ),
           //event button
-          new SliverFixedExtentList(
-            itemExtent: 58.0,
-            delegate: new SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return new Padding(
+          new SliverToBoxAdapter(
+                child:  new Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: new OutlineButton(
                       highlightedBorderColor: Colors.black54,
+                      highlightColor: Colors.white30,
                       color: Colors.white,
                       onPressed: () {
                         print("Event button tap");
+                        Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => new Events()),
+                        );
                       },
                       child: new ListTile(
                         title: new Text("View All Events"),
                         trailing: new Icon(Icons.keyboard_arrow_right),
                       ),
-                    ));
-              },
-              childCount: 1,
-            ),
+                    ))
           ),
         ],
       ),

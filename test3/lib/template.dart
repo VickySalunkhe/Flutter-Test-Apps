@@ -1,29 +1,18 @@
 import 'package:flutter/material.dart';
-//import 'package:test2/brands.dart';
 import 'main.dart';
+import 'brands.dart';
 import 'events.dart';
-import 'brand_product.dart';
 
-class Brands extends StatefulWidget {
+
+class ProductDetails extends StatefulWidget {
+  static const String routeName = '/material/scrollable-tabs';
+
   @override
-  _BrandsMainBodyState createState() => new _BrandsMainBodyState();
+  ProductDetailsState createState() => new ProductDetailsState();
 }
 
-List _brands = [
-  '3 GENERATION',
-  'Allure',
-  'Crescent',
-  'Dome Disc set',
-  'Embrace Necklace Sets',
-  'Embrace',
-  'Fiori',
-  'Frama',
-  'Glambangs',
-  'Glide Star'
-];
-
-class _BrandsMainBodyState extends State<Brands> {
-
+class ProductDetailsState extends State<ProductDetails>
+    with SingleTickerProviderStateMixin {
 
   _menuLayout() {
     return new Container(
@@ -116,7 +105,7 @@ class _BrandsMainBodyState extends State<Brands> {
                     new Icon(Icons.keyboard_arrow_right, color: Colors.white),
                 onTap: () {
                   Navigator.pop(context);
-                  //_iconTapped("Contact us");
+                  print("Contact us");
                 }),
             new Divider(
               color: Colors.grey,
@@ -132,13 +121,13 @@ class _BrandsMainBodyState extends State<Brands> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         new GestureDetector(
-          onTap: (){
+          onTap: () {
             Navigator.push(
-                    context,
-                    new MaterialPageRoute(builder: (context) => new MainBody()),
-                  );
+              context,
+              new MaterialPageRoute(builder: (context) => new MainBody()),
+            );
           },
-        //child: new Expanded(
+          //child: new Expanded(
           child: new Row(
             children: [
               new Container(
@@ -170,19 +159,16 @@ class _BrandsMainBodyState extends State<Brands> {
               ),
             ],
           ),
-        //),
-      ),
+          //),
+        ),
       ],
-        
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: //AppBar(),
-          new AppBar(
-        //backgroundColor: Colors.black87,
+      appBar: new AppBar(
         title: _appBarLayout(),
         actions: <Widget>[
           new IconButton(
@@ -190,7 +176,7 @@ class _BrandsMainBodyState extends State<Brands> {
             color: Colors.white,
             tooltip: 'Search',
             onPressed: () {
-             // _iconTapped("search");
+              print("search");
             },
           ),
           new IconButton(
@@ -198,7 +184,7 @@ class _BrandsMainBodyState extends State<Brands> {
             tooltip: 'Quotes',
             color: Colors.white,
             onPressed: () {
-             // _iconTapped("Quotes");
+              print("Quotes");
             },
           )
         ],
@@ -208,39 +194,18 @@ class _BrandsMainBodyState extends State<Brands> {
       ),
       body: new CustomScrollView(
         slivers: <Widget>[
-          const SliverAppBar(
+          new SliverAppBar(
             automaticallyImplyLeading: false,
-            pinned: true,
-            flexibleSpace: const FlexibleSpaceBar(
+            pinned: false,
+            flexibleSpace: new FlexibleSpaceBar(
               centerTitle: true,
-              title: const Text("Brands"),
+              title: new Text("E-116209 Y-TT"),
             ),
           ),
-          new SliverFixedExtentList(
-              itemExtent: MediaQuery.of(context).size.width / 2.2,
-              delegate: new SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return new GestureDetector(
-                      onTap: () {
-                        print(_brands[index] + ' Image Tapped!  -> $index');
-                        Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => new BrandProducts(index)),
-                        );
-                      },
-                      child: new Card(
-                        child: new Image.network(
-                          "https://personalproject1.000webhostapp.com/images/rect_brand_img.png",
-                          height: MediaQuery.of(context).size.width / 2.5,
-                          width: MediaQuery.of(context).size.width - 10,
-                          fit: BoxFit.contain,
-                        ),
-                      ));
-                },childCount: _brands.length, 
-              )),
+          
         ],
       ),
+  
     );
   }
 }

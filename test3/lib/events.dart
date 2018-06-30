@@ -249,7 +249,7 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
                         child: new Column(
                           children: [
                             new Image.network(
-                                "https://personalproject1.000webhostapp.com/images/product/SR-BR-112247..jpg",
+                                "https://personalproject1.000webhostapp.com/images/event_img.png",
                                 height: MediaQuery.of(context).size.width / 2.5,
                                 width: MediaQuery.of(context).size.width - 10,
                                 fit: BoxFit.contain),

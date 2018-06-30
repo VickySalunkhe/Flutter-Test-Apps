@@ -243,7 +243,122 @@ class ReviewPageState extends State<ReviewPage>
       ),
       body: new CustomScrollView(
         slivers: <Widget>[
-          
+          new SliverToBoxAdapter(
+            child: new Container(
+              decoration: new BoxDecoration(
+                  border: new Border.all(color: Colors.black26)),
+              padding: const EdgeInsets.all(10.0),
+              margin: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  new Padding(
+                    padding: const EdgeInsets.only(left: 10.0, bottom: 5.0),
+                    child: new Text(
+                      "Customer reviews",
+                      style: TextStyle(
+                          fontSize: 22.0, fontWeight: FontWeight.w500),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  new Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: new Row(
+                      children: <Widget>[
+                        new Icon(Icons.star),
+                        new Icon(Icons.star),
+                        new Icon(Icons.star),
+                        new Icon(Icons.star),
+                        new Icon(Icons.star_half),
+                        new Text("\t\r2",
+                            style: TextStyle(
+                              fontSize: 22.0,
+                            )),
+                      ],
+                    ),
+                  ),
+                  new Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: new Text("4.5 out of 5 Stars",
+                        style: TextStyle(fontSize: 18.0)),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          new SliverToBoxAdapter(
+            child: new Column(
+              children: _reviews.map((_ReviewPage _review) {
+                return new Container(
+                  //decoration: new BoxDecoration(border: new Border.all(color: Colors.black26)),
+                  //width: MediaQuery.of(context).size.width / 1.25,
+                  //color: Colors.black12,
+                  padding: const EdgeInsets.all(15.0),
+                  margin: const EdgeInsets.only(top: 5.0, right: 10.0),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        new Row(
+                          children: <Widget>[
+                            new Icon(Icons.person),
+                            new Padding(
+                              padding: const EdgeInsets.only(left: 10.0),
+                              child: new Text(_review.name,
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w400),
+                                  textAlign: TextAlign.left),
+                            ),
+                          ],
+                        ),
+                        new Row(
+                          children: _getStar(_review.star),
+                        ),
+                        new Text("Reviewed on 10/03/2018"),
+                        new Padding(
+                          padding: const EdgeInsets.only(top: 5.0),
+                          child: new Text(_review.text,
+                              style: TextStyle(
+                                  fontSize: 16.0, fontWeight: FontWeight.w400),
+                              textAlign: TextAlign.left),
+                        ),
+                        new Padding(
+                            padding:
+                                const EdgeInsets.only(top: 5.0, bottom: 5.0),
+                            child: new Text("2 person found this helpful",
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w300))),
+                        new Padding(
+                            padding:
+                                const EdgeInsets.only(top: 5.0, bottom: 5.0),
+                            child: new Container(
+                                width: MediaQuery.of(context).size.width / 1.6,
+                                child: new Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    new RaisedButton(
+                                      onPressed: () {
+                                        print("object");
+                                      },
+                                      color: Colors.white70,
+                                      child: new Text("Helpful"),
+                                    ),
+                                    new RaisedButton(
+                                      onPressed: () {
+                                        print("object");
+                                      },
+                                      color: Colors.white70,
+                                      child: new Text("Not Helpful"),
+                                    )
+                                  ],
+                                )))
+                      ]),
+                );
+              }).toList(),
+            ),
+          )
         ],
       ),
     );
