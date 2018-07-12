@@ -148,7 +148,7 @@ class _MainBodyState extends State<MainBody> {
           ],
         ));
   }
-
+ 
   _appBarLayout() {
     return new Row(
       mainAxisSize: MainAxisSize.min,
@@ -200,6 +200,30 @@ class _MainBodyState extends State<MainBody> {
         
     );
   }
+
+String _getimgsource(int val){
+  String url="";
+
+  switch (10 % (val+1)) {
+     case 0:
+        url = "https://personalproject1.000webhostapp.com/new/embrace1_sq.png";
+       break;
+     case 1:
+        url = "https://personalproject1.000webhostapp.com/new/embrace_sq.png";
+       break;
+     case 2:
+        url = "https://personalproject1.000webhostapp.com/new/monalisa1_sq.png";
+       break;    
+     case 3:
+        url = "https://personalproject1.000webhostapp.com/new/monalisa_sq.png";
+       break;  
+     case 4:
+        url = "https://personalproject1.000webhostapp.com/new/dazzle_sq.png";
+       break;      
+     
+  }
+  return url;
+}
 
   @override
   Widget build(BuildContext context) {
@@ -296,7 +320,7 @@ class _MainBodyState extends State<MainBody> {
                         child: new Column(
                           children: <Widget>[
                             new Image.network(
-                              "https://personalproject1.000webhostapp.com/images/brand_img.png",
+                              _getimgsource(index),
                               alignment: Alignment.center,
                               height:
                                   MediaQuery.of(context).size.width / 2 - 10,
@@ -359,12 +383,12 @@ class _MainBodyState extends State<MainBody> {
                       margin: const EdgeInsets.all(5.0),
                       //height: size.width/2,
                       //width: size.width,
-                      child: new Image.network(
-                          "https://personalproject1.000webhostapp.com/images/event_img.png",
+                      child: new Image.network( 
+                          "https://personalproject1.000webhostapp.com/images/banner/JCK-website-banner-1.png",
                           height:
                               ((MediaQuery.of(context).size.width - 10.0) / 2),
                           width: MediaQuery.of(context).size.width - 10.0,
-                          fit: BoxFit.contain),
+                          fit: BoxFit.cover),
                     ));
               },
               childCount: 2,

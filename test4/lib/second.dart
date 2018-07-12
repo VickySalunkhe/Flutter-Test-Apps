@@ -1,51 +1,56 @@
 import 'package:flutter/material.dart';
 import 'brands.dart';
-import 'main.dart';
 import 'events.dart';
-import 'brand_product.dart';
-//void main() => runApp(new MyApp());
+import 'main.dart';
 
-class Events extends StatefulWidget {
-  @override
-  createState() => new _EventsState();
+class _ReviewPage {
+  const _ReviewPage({this.text, this.star, this.name});
+  final String text, name;
+  final int star;
 }
 
-List _brands = [
-  '3 GENERATION',
-  'Allure',
-  'Crescent',
-  'Dome Disc set',
-  'Embrace Necklace Sets',
-  'Embrace',
-  'Fiori',
-  'Frama',
-  'Glambangs',
-  'Glide Star'
+const List<_ReviewPage> _reviews = const <_ReviewPage>[
+  const _ReviewPage(
+      text:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt  ',
+      star: 4,
+      name: 'Vicky'),
+  const _ReviewPage(
+      text:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt  ',
+      star: 5,
+      name: 'Vipul'),
+  const _ReviewPage(
+      text:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt  ',
+      star: 3,
+      name: 'Vicky'),
+  const _ReviewPage(
+      text:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt  ',
+      star: 3,
+      name: 'Vipul'),
+  const _ReviewPage(
+      text:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt  ',
+      star: 4,
+      name: 'Vicky'),
+  const _ReviewPage(
+      text:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt  ',
+      star: 2,
+      name: 'Vipul'),
 ];
 
-class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
-  String _newText = "Screen 2 Add widgets here.........";
-  void _iconTapped(String value) {
-    setState(() {
-      _newText = value;
-    });
-  }
-
-  TabController _controller;
-
-  //bool _customIndicator = false;
-  @override
-  void initState() {
-    super.initState();
-    _controller = new TabController(vsync: this, length: 1, initialIndex: 0);
-  }
+class ReviewPage extends StatefulWidget {
+  static const String routeName = '/material/scrollable-tabs';
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  ReviewPageState createState() => new ReviewPageState();
+}
 
+class ReviewPageState extends State<ReviewPage>
+    with SingleTickerProviderStateMixin {
   _menuLayout() {
     return new Container(
         color: Colors.black,
@@ -137,7 +142,7 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
                     new Icon(Icons.keyboard_arrow_right, color: Colors.white),
                 onTap: () {
                   Navigator.pop(context);
-                  _iconTapped("Contact us");
+                  print("Contact us");
                 }),
             new Divider(
               color: Colors.grey,
@@ -153,13 +158,13 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         new GestureDetector(
-          onTap: (){
+          onTap: () {
             Navigator.push(
-                    context,
-                    new MaterialPageRoute(builder: (context) => new MainBody()),
-                  );
+              context,
+              new MaterialPageRoute(builder: (context) => new MainBody()),
+            );
           },
-        //child: new Expanded(
+          //child: new Expanded(
           child: new Row(
             children: [
               new Container(
@@ -191,99 +196,56 @@ class _EventsState extends State<Events> with SingleTickerProviderStateMixin {
               ),
             ],
           ),
-        //),
-      ),
+          //),
+        ),
       ],
-        
     );
+  }
+
+  List<Widget> _getStar(int star) {
+    List<Widget> rating = [];
+    for (int i = 1; i <= 5; i++) {
+      if (i <= star) {
+        rating.add(new Icon(Icons.star));
+      } else {
+        rating.add(new Icon(Icons.star_border));
+      }
+    }
+    return rating;
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        //AppBar(),
-
-        appBar: new AppBar(
-          title: _appBarLayout(),
-          actions: <Widget>[
-            new IconButton(
-              icon: new Icon(Icons.search),
-              color: Colors.white,
-              tooltip: 'Search',
-              onPressed: () {
-                _iconTapped("search");
-              },
-            ),
-            new IconButton(
-              icon: new Icon(Icons.library_books),
-              tooltip: 'Quotes',
-              color: Colors.white,
-              onPressed: () {
-                _iconTapped("Quotes");
-              },
-            )
-          ],
-        ),
-        drawer: new Drawer(
-          child: _menuLayout(),
-        ),
-        body: new CustomScrollView(slivers: <Widget>[
-          const SliverAppBar(
-            automaticallyImplyLeading: false,
-            pinned: true,
-            flexibleSpace: const FlexibleSpaceBar(
-              centerTitle: true,
-              title: const Text("Upcoming Events"),
-            ),
+      appBar: new AppBar(
+        title: _appBarLayout(),
+        actions: <Widget>[
+          new IconButton(
+            icon: new Icon(Icons.search),
+            color: Colors.white,
+            tooltip: 'Search',
+            onPressed: () {
+              print("search");
+            },
           ),
-          new SliverFixedExtentList(
-            itemExtent: MediaQuery.of(context).size.width / 1.89,
-            delegate: new SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return new GestureDetector(
-                    onTap: () {
-                      print(_brands[index] + ' Image Tapped!  -> $index');
-                    },
-                    child: new Card(
-                        margin: const EdgeInsets.all(5.0),
-                        child: new Column(
-                          children: [
-                            new Image.network(
-                                "https://personalproject1.000webhostapp.com/images/banner/JCK-website-banner-1.png",
-                                height:
-                                  ((MediaQuery.of(context).size.width ) / 2),
-                                 width: MediaQuery.of(context).size.width,
-                                fit: BoxFit.cover),
-                          ],
-                        )));
-              },
-              childCount: 4,
-            ),
+          new IconButton(
+            icon: new Icon(Icons.library_books),
+            tooltip: 'Quotes',
+            color: Colors.white,
+            onPressed: () {
+              print("Quotes");
+            },
           )
-        ])
-
-        /*new ListView.builder(
-          itemCount: _brands.length,
-          itemBuilder: (BuildContext context, int index) {
-            return new GestureDetector(
-                onTap: () {
-                  print(_brands[index] + ' Image Tapped!  -> $index');
-                },
-                child: new Card(
-                    margin: const EdgeInsets.all(5.0),
-                    child: new Column(
-                      children: [
-                        new Image.network(
-                            "https://personalproject1.000webhostapp.com/images/product/SR-BR-112247..jpg",
-                            height: MediaQuery.of(context).size.width / 2.5,
-                            width: MediaQuery.of(context).size.width - 10,
-                            fit: BoxFit.contain),
-                      ],
-                    )));
-          },
-        )
-        */
-
-        );
+        ],
+      ),
+      drawer: new Drawer(
+        child: _menuLayout(),
+      ),
+      body: new CustomScrollView(
+        slivers: <Widget>[
+          
+        ],
+      ),
+    );
   }
 }

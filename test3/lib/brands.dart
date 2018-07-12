@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'main.dart';
 import 'events.dart';
 import 'brand_product.dart';
+import 'menuLayout.dart';
 
 class Brands extends StatefulWidget {
   @override
@@ -177,6 +178,30 @@ class _BrandsMainBodyState extends State<Brands> {
     );
   }
 
+String _getimgsource(int val){
+  String url="";
+
+  switch (10 % (val+1)) {
+     case 0:
+        url = "https://personalproject1.000webhostapp.com/new/embrace1_rc.png";
+       break;
+     case 1:
+        url = "https://personalproject1.000webhostapp.com/new/embrace_rc.png";
+       break;
+     case 2:
+        url = "https://personalproject1.000webhostapp.com/new/monalisa1_rc.png";
+       break;    
+     case 3:
+        url = "https://personalproject1.000webhostapp.com/new/monalisa_rc.png";
+       break;  
+     case 4:
+        url = "https://personalproject1.000webhostapp.com/new/dazzle_rc.png";
+       break;      
+     
+  }
+  return url;
+}
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -204,7 +229,7 @@ class _BrandsMainBodyState extends State<Brands> {
         ],
       ),
       drawer: new Drawer(
-        child: _menuLayout(),
+        child: MenuLayout.menuLayout1(context),
       ),
       body: new CustomScrollView(
         slivers: <Widget>[
@@ -230,11 +255,13 @@ class _BrandsMainBodyState extends State<Brands> {
                         );
                       },
                       child: new Card(
+                        
                         child: new Image.network(
-                          "https://personalproject1.000webhostapp.com/images/rect_brand_img.png",
+                          _getimgsource(index)
+                          ,
                           height: MediaQuery.of(context).size.width / 2.5,
                           width: MediaQuery.of(context).size.width - 10,
-                          fit: BoxFit.contain,
+                          fit: BoxFit.fitWidth,
                         ),
                       ));
                 },childCount: _brands.length, 

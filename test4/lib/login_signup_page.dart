@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:test3/test.dart';
+import 'test.dart';
 import 'main.dart';
 
 class LoginSignupPage extends StatefulWidget {
@@ -341,6 +341,76 @@ String _validatePassword(String value) {
                 },
               ),
             ),
+
+
+
+const SizedBox(height: 7.0),
+            new Container(
+              padding: const EdgeInsets.only(left: 15.0),
+              color: Colors.white,
+              child: new TextFormField(
+                decoration: const InputDecoration(
+                  fillColor: Colors.white,
+                  border: UnderlineInputBorder(),
+                  filled: true,
+                  icon: const Icon(
+                    Icons.email,
+                    color: Colors.black,
+                  ),
+                  hintText: 'Your email address',
+                  labelText: 'E-mail',
+                ),
+                keyboardType: TextInputType.emailAddress,
+                onSaved: (String value) {
+                  person.email = value;
+                },
+              ),
+            ),const SizedBox(height: 7.0),
+            new Container(
+              padding: const EdgeInsets.only(left: 15.0),
+              color: Colors.white,
+              child: new TextFormField(
+                decoration: const InputDecoration(
+                  fillColor: Colors.white,
+                  border: UnderlineInputBorder(),
+                  filled: true,
+                  icon: const Icon(
+                    Icons.email,
+                    color: Colors.black,
+                  ),
+                  hintText: 'Your email address',
+                  labelText: 'E-mail',
+                ),
+                keyboardType: TextInputType.emailAddress,
+                onSaved: (String value) {
+                  person.email = value;
+                },
+              ),
+            ),const SizedBox(height: 7.0),
+            new Container(
+              padding: const EdgeInsets.only(left: 15.0),
+              color: Colors.white,
+              child: new TextFormField(
+                decoration: const InputDecoration(
+                  fillColor: Colors.white,
+                  border: UnderlineInputBorder(),
+                  filled: true,
+                  icon: const Icon(
+                    Icons.email,
+                    color: Colors.black,
+                  ),
+                  hintText: 'Your email address',
+                  labelText: 'E-mail',
+                ),
+                keyboardType: TextInputType.emailAddress,
+                onSaved: (String value) {
+                  person.email = value;
+                },
+              ),
+            ),
+
+
+
             const SizedBox(height: 7.0),
             new PasswordField(
               fieldKey: _signuppasswordFieldKey,
@@ -424,9 +494,14 @@ String _validatePassword(String value) {
                     tabs: _customizePages.map((_CustomizePage _page) {
                       return new Tab(text: _page.text);
                     }).toList()),
-                new Container(
-                    height: MediaQuery.of(context).size.height / 1.65,
+                new SingleChildScrollView(
+                    // 
+                    scrollDirection: Axis.vertical,
+                    controller: ScrollController(),
+                    child: new Container(
+                      height: MediaQuery.of(context).size.height / 1.65,
                     child: new TabBarView(
+                      
                         controller: _controller,
                         children: _customizePages.map((_CustomizePage _page) {
                           //return new Tab(text: _page.text);
@@ -438,9 +513,9 @@ String _validatePassword(String value) {
                               return _signup();
                               break;
                             default:
-                              new Text("datda");
+                              new Text("data");
                           }
-                        }).toList())),
+                        }).toList()))),
               ],
             )));
   }
