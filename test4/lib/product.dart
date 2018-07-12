@@ -3,7 +3,7 @@ import 'all_reviews.dart';
 import 'Menu.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-List<String> _getdiamonQuality = [
+List<String> _getDiamondQuality = [
   "VVS1",
   "VVS2",
   "VS1",
@@ -15,13 +15,28 @@ List<String> _getdiamonQuality = [
   "I3",
   "Single Cut",
 ];
+  List<String> _getColour = ["White Gold", "Gold", "Rose Gold", "Yellow Gold"];
 
-List<String> _getkarat = [
+List<String> _getKarat = [
   "9 KT",
   "10 KT",
   "14 KT",
   "18 KT",
 ];
+
+class _CustomizePage {
+  const _CustomizePage({this.pos, this.text});
+  final int pos;
+  final String text;
+}
+
+const List<_CustomizePage> _customizePages = const <_CustomizePage>[
+  const _CustomizePage(pos: 0, text: 'Karat'),
+  const _CustomizePage(pos: 1, text: 'Diamond Quality'),
+  const _CustomizePage(pos: 2, text: 'Colour'),
+  const _CustomizePage(pos: 3, text: 'Standard'),
+];
+
 final List<String> productImage = [
   "https://personalproject1.000webhostapp.com/images/product/SR-R-126115..jpg",
   "https://personalproject1.000webhostapp.com/images/product/SR-R-126115..jpg",
@@ -62,18 +77,6 @@ const List<_ProductDetails> _productDetails = const <_ProductDetails>[
   const _ProductDetails(category: "Diamond Colour", value: "G-H Colour"),
 ];
 
-class _CustomizePage {
-  const _CustomizePage({this.pos, this.text});
-  final int pos;
-  final String text;
-}
-
-const List<_CustomizePage> _customizePages = const <_CustomizePage>[
-  const _CustomizePage(pos: 0, text: 'Karat'),
-  const _CustomizePage(pos: 1, text: 'Diamond Quality'),
-  const _CustomizePage(pos: 2, text: 'Colour'),
-  const _CustomizePage(pos: 3, text: 'Standard'),
-];
 
 class ProductDetails extends StatefulWidget {
   static const String routeName = '/material/scrollable-tabs';
@@ -85,6 +88,7 @@ class ProductDetails extends StatefulWidget {
 class ProductDetailsState extends State<ProductDetails>
     with SingleTickerProviderStateMixin {
   TabController _controller;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -93,10 +97,24 @@ class ProductDetailsState extends State<ProductDetails>
         vsync: this, length: _customizePages.length, initialIndex: 0);
   }
 
-  List<String> _getColour = ["White Gold", "Gold", "Rose Gold", "Yellow Gold"];
 
   
   int _iCount = 0;
+  var selectedValKarat,selectedValQuality,selectedValColour;
+_changeSelectedColor(selectedVal,index){
+  if(selectedVal==index)
+    return Colors.black12;
+  else
+    return Colors.white;
+}
+bool allFieldSelected = false;
+
+_checkFields(){
+  if(selectedValKarat==null || selectedValQuality==null ||selectedValColour==null)
+    allFieldSelected = false;
+  else
+    allFieldSelected = true;
+}
 
   Widget _colour(int _itemCount) {
     return new GridView.builder(
@@ -107,10 +125,12 @@ class ProductDetailsState extends State<ProductDetails>
       ),
       itemBuilder: (BuildContext context, int index) {
         return new Container(
+            color: _changeSelectedColor(selectedValColour,index),
             padding: const EdgeInsets.all(10.0),
             child: new GestureDetector(
                 onTap: () {
                   print("Colour Tap, $index  -> " + _getColour[index]);
+                  setState(() { selectedValColour = index; });
                 },
                 child: new Column(children: [
                   new Image.network(
@@ -141,15 +161,17 @@ class ProductDetailsState extends State<ProductDetails>
           itemBuilder: (BuildContext context, int index) {
             return new GestureDetector(
               onTap: () {
-                print("Karat Tap $index -> " + _getkarat[index]);
-              },
+                print("Karat Tap $index -> " + _getKarat[index]); 
+                setState(() { selectedValKarat = index; });
+              }, 
               child: new Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.all(5.0),
                 decoration: new BoxDecoration(
+                    color: _changeSelectedColor(selectedValKarat,index),
                     border: new Border.all(color: Colors.black26)),
                 child: new Text(
-                  _getkarat[index],
+                  _getKarat[index],
                   style: TextStyle(fontSize: 16.0),
                 ),
               ),
@@ -168,17 +190,19 @@ class ProductDetailsState extends State<ProductDetails>
       ),
       itemBuilder: (BuildContext context, int index) {
         return new Container(
+            color: _changeSelectedColor(selectedValQuality,index),
             margin: EdgeInsets.only(top: 10.0),
             //padding: const EdgeInsets.only(top:5.0,left:10.0,right:10.0,bottom: 4.0),
             child: new GestureDetector(
                 onTap: () {
-                  print("Diamond Tap, $index  -> " + _getdiamonQuality[index]);
+                  print("Diamond Tap, $index  -> " + _getDiamondQuality[index]);
+                  setState(() { selectedValQuality = index; });
                 },
                 child: new Column(children: [
                   new Icon(Icons.ac_unit),
                   new Padding(
                     padding: const EdgeInsets.only(top: 4.0),
-                    child: new Text(_getdiamonQuality[index],
+                    child: new Text(_getDiamondQuality[index],
                         textAlign: TextAlign.center),
                   ),
                 ])));
@@ -211,6 +235,11 @@ class ProductDetailsState extends State<ProductDetails>
     });
   }
 
+  void showInSnackBar(String value) {
+    _scaffoldKey.currentState
+        .showSnackBar(new SnackBar(content: new Text(value)));
+  }
+
   List<Widget> _getStar(int star) {
     List<Widget> rating = [];
     for (int i = 1; i <= 5; i++) {
@@ -226,6 +255,7 @@ class ProductDetailsState extends State<ProductDetails>
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+        key: _scaffoldKey,
         appBar: new AppBar(
           title: Menu.appBarLayoutMain(context),
         ),
@@ -319,10 +349,10 @@ class ProductDetailsState extends State<ProductDetails>
                           //return new Tab(text: _page.text);
                           switch (_page.pos.toInt()) {
                             case 0:
-                              return _karat(_getkarat.length);
+                              return _karat(_getKarat.length);
                               break;
                             case 1:
-                              return _diamond(_getdiamonQuality.length);
+                              return _diamond(_getDiamondQuality.length);
                               break;
                             case 2:
                               return _colour(_getColour.length);
@@ -613,6 +643,19 @@ class ProductDetailsState extends State<ProductDetails>
               new GestureDetector(
                 onTap: () {
                   print("Add to Quote ");
+                  setState(() { 
+                        _checkFields();
+                        if(allFieldSelected){ 
+                          
+                        showInSnackBar(_getDiamondQuality[selectedValQuality]
+                        +" \n"+_getKarat[selectedValKarat] +"\n"+_getColour[selectedValColour]);
+                          print("all fields are selected");
+                        }
+                        else{
+                        showInSnackBar("some fields are not selected");
+                          print("some fields are not selected");
+                        }
+                  });
                 },
                 child: new Container(
                   color: Colors.black12,
@@ -630,6 +673,17 @@ class ProductDetailsState extends State<ProductDetails>
               new GestureDetector(
                   onTap: () {
                     print("Quote Now");
+                    setState(() { 
+                        _checkFields();
+                        if(allFieldSelected){
+                        showInSnackBar("all fields are selected");
+                          print("all fields are selected");
+                        }
+                        else{
+                        showInSnackBar("some fields are not selected");
+                          print("some fields are not selected");
+                        }
+                  });
                   },
                   child: new Container(
                     color: Colors.black,

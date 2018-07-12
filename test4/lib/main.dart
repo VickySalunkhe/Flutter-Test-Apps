@@ -34,12 +34,13 @@ class MyApp extends StatelessWidget {
         routes: <String, WidgetBuilder>{
           '/Home': (BuildContext context) => new MainBody(),
           '/Second': (BuildContext context) => new ProductDetails(),
-          '/Review': (BuildContext context) => new TextFormFieldDemo(),
+          '/Review': (BuildContext context) => new TextFormFieldDemo(), 
           '/LoginSingup': (BuildContext context) => new LoginSignupPage(),
           '/IntroScreens': (BuildContext context) => new IntroScreens(),
+          'Product': (BuildContext context) => new ProductDetails(),
 
         },  
-        home: new LoginSignupPage());// ExpansionPanelsDemo()); //ProductDetails());
+        home: new ProductDetails());// ExpansionPanelsDemo()); //ProductDetails());
   } 
 }
 
