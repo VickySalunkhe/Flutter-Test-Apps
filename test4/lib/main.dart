@@ -7,6 +7,7 @@ import 'events.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'product.dart';
 import'all_reviews.dart';
+import 'customized_quotation.dart';
 import 'Menu.dart';
 import 'intro_screens.dart';
 
@@ -38,9 +39,10 @@ class MyApp extends StatelessWidget {
           '/LoginSingup': (BuildContext context) => new LoginSignupPage(),
           '/IntroScreens': (BuildContext context) => new IntroScreens(),
           'Product': (BuildContext context) => new ProductDetails(),
+          '/CQuotation':(BuildContext context) => new CustomizedQuotation(),
 
         },  
-        home: new ProductDetails());// ExpansionPanelsDemo()); //ProductDetails());
+        home: new CustomizedQuotation());// ExpansionPanelsDemo()); //ProductDetails());
   } 
 }
 
